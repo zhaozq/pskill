@@ -1,0 +1,17 @@
+#!/bin/env perl
+
+$dest = @ARGV[0];
+$kill = @ARGV[1];
+
+open PS, "-|", "ps xu";
+
+while(<PS>)
+{
+    next if /$$/ or ! /$dest/;
+
+    /([0-9]+)/;
+
+    defined($kill) ?
+        kill 'KILL', "$1" :
+        print;
+}
